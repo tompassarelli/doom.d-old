@@ -1,2 +1,2 @@
 (setq
- projectile-project-search-path '("~/code/")) 
+ projectile-project-search-path '("~/V/")) 
