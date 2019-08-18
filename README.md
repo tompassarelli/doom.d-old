@@ -1,1 +1,1 @@
-personal doom config configuration 
+personal doom configuration 
