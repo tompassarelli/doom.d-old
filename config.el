@@ -20,7 +20,3 @@
   :config
   (org-super-agenda-mode))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((typescript . t)
-   ))
