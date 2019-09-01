@@ -18,9 +18,9 @@
 (add-hook! 'org-capture-mode-hook (company-mode -1))
 
 (setq
- doom-font (font-spec :family "Hack" :size 20)
- doom-big-font (font-spec :family "Hack" :size 36)
- doom-variable-pitch-font (font-spec :family "Hack" :size 18)
+ doom-font (font-spec :family "Hack" :size 16)
+ doom-big-font (font-spec :family "Hack" :size 22)
+ doom-variable-pitch-font (font-spec :family "Hack" :size 14)
  dart-format-on-save t
  web-mode-markup-indent-offset 2
  web-mode-code-indent-offset 2
@@ -31,7 +31,7 @@
  typescript-indent-level 2
  json-reformat:indent-width 2
  prettier-js-args '("--single-quote")
- projectile-project-search-path '("~/V/")
+ projectile-project-search-path '("~/code/")
  dired-dwim-target t
  org-ellipsis " ▾ "
  org-bullets-bullet-list '("·")
@@ -77,7 +77,7 @@
 ;;          ("S-<tab>" . parinfer-smart-tab:dwim-left))
 ;;   :hook ((clojure-mode emacs-lisp-mode common-lisp-mode lisp-mode) . parinfer-mode)
 ;;   :config (setq parinfer-extensions '(defaults pretty-parens evil paredit)))
-
+;;
 (after! org
   (set-face-attribute 'org-link nil
                       :weight 'normal
@@ -117,7 +117,21 @@
                       :background nil
                       :height 1.75
                       :weight 'bold)
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+  (map! :map org-mode-map
+        :n "M-j" #'org-metadown
+        :n "M-k" #'org-metaup)
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")
+        org-agenda-skip-scheduled-if-done t
+        org-directory "~/org/"
+        org-bullets-bullet-list '("•")
+        org-tags-column -80
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
+        org-todo-keyword-faces
+        '(("TODO" :foreground "#7c7c78" :weight normal :underline t)
+          ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
+          ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+          ("DONE" :foreground "#50a14f" :weight normal :underline t)
+          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))))
 
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.njk\\'" . web-mode)))
