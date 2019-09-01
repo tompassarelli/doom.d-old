@@ -18,9 +18,9 @@
 (add-hook! 'org-capture-mode-hook (company-mode -1))
 
 (setq
- doom-font (font-spec :family "SF Mono" :size 20)
- doom-big-font (font-spec :family "SF Mono" :size 36)
- doom-variable-pitch-font (font-spec :family "Avenir Next" :size 18)
+ doom-font (font-spec :family "Hack" :size 20)
+ doom-big-font (font-spec :family "Hack" :size 36)
+ doom-variable-pitch-font (font-spec :family "Hack" :size 18)
  dart-format-on-save t
  web-mode-markup-indent-offset 2
  web-mode-code-indent-offset 2
@@ -31,7 +31,7 @@
  typescript-indent-level 2
  json-reformat:indent-width 2
  prettier-js-args '("--single-quote")
- projectile-project-search-path '("~/code/")
+ projectile-project-search-path '("~/V/")
  dired-dwim-target t
  org-ellipsis " ▾ "
  org-bullets-bullet-list '("·")
@@ -62,8 +62,6 @@
                            (:name "Big Outcomes"
                                   :tag "bo")))
 
-(add-hook! reason-mode
-  (add-hook 'before-save-hook #'refmt-before-save nil t))
 
 (add-hook!
   js2-mode 'prettier-js-mode
@@ -121,14 +119,6 @@
                       :weight 'bold)
   (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 
-(after! ruby
-  (add-to-list 'hs-special-modes-alist
-               `(ruby-mode
-                 ,(rx (or "def" "class" "module" "do" "{" "[")) ; Block start
-                 ,(rx (or "}" "]" "end"))                       ; Block end
-                 ,(rx (or "#" "=begin"))                        ; Comment start
-                 ruby-forward-sexp nil)))
-
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.njk\\'" . web-mode)))
 
@@ -142,8 +132,6 @@
         (end-of-line)))))
 
 (add-to-list 'hs-special-modes-alist '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
-
-(remove-hook 'enh-ruby-mode-hook #'+ruby|init-robe)
 
 (setq +magit-hub-features t)
 
