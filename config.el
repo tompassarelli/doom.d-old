@@ -131,7 +131,8 @@
           ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
           ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
           ("DONE" :foreground "#50a14f" :weight normal :underline t)
-          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))))
+          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
+        org-agenda-files (list "/org/dummy.org")))
 
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.njk\\'" . web-mode)))
@@ -148,6 +149,9 @@
 (add-to-list 'hs-special-modes-alist '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
 
 (setq +magit-hub-features t)
+
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+
 
 (set-popup-rule! "^\\*Org Agenda" :side 'bottom :size 0.90 :select t :ttl nil)
 (set-popup-rule! "^CAPTURE.*\\.org$" :side 'bottom :size 0.90 :select t :ttl nil)
