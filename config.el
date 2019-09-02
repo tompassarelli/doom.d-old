@@ -71,6 +71,12 @@
 (map! :ne "SPC / r" #'deadgrep)
 (map! :ne "SPC n b" #'org-brain-visualize)
 
+
+(def-package! org-fancy-priorities
+  :hook (org-mode . org-fancy-priorities-mode)
+  :config
+  (setq org-fancy-priorities-list '("■" "■" "■")))
+
 ;; (def-package! parinfer ; to configure it
 ;;   :bind (("C-," . parinfer-toggle-mode)
 ;;          ("<tab>" . parinfer-smart-tab:dwim-right)
@@ -120,10 +126,13 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")
-        org-agenda-skip-scheduled-if-done t
-        org-directory "~/org/"
-        org-bullets-bullet-list '("•")
+  (setq org-agenda-skip-scheduled-if-done t
+        org-priority-faces '((?A :foreground "#e45649")
+                             (?B :foreground "#da8548")
+                             (?C :foreground "#0098dd"))
+        org-directory "~/org"
+        org-agenda-files ("~/org/driver/agenda-day")
+        org-bullets-bullet-list '("⁖")
         org-tags-column -80
         org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
         org-todo-keyword-faces
@@ -131,8 +140,7 @@
           ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
           ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
           ("DONE" :foreground "#50a14f" :weight normal :underline t)
-          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))
-        org-agenda-files (list "/org/dummy.org")))
+          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))))
 
 (after! web-mode
   (add-to-list 'auto-mode-alist '("\\.njk\\'" . web-mode)))
