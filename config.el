@@ -130,8 +130,7 @@
         org-priority-faces '((?A :foreground "#e45649")
                              (?B :foreground "#da8548")
                              (?C :foreground "#0098dd"))
-        org-directory "~/org"
-        org-agenda-files ("~/org/driver/agenda-day")
+        org-directory "~/org/"
         org-bullets-bullet-list '("⁖")
         org-tags-column -80
         org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
