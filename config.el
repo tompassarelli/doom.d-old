@@ -1,89 +1,39 @@
-(add-to-list 'default-frame-alist
-             '(ns-transparent-titlebar . t))
-(add-to-list 'default-frame-alist
-             '(ns-appearance . dark))
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-(global-auto-revert-mode t)
+;; Place your private configuration here! Remember, you do not need to run 'doom
+;; refresh' after modifying this file!
 
-(add-hook 'org-mode-hook #'auto-fill-mode)
 
-(defun +org*update-cookies ()
-  (when (and buffer-file-name (file-exists-p buffer-file-name))
-    (let (org-hierarchical-todo-statistics)
-      (org-update-parent-todo-statistics))))
+;; These are used for a number of things, particularly for GPG configuration,
+;; some email clients, file templates and snippets.
+(setq user-full-name "Tom Passarelli"
+      user-mail-address "tom.passarelli@protonmail.com")
 
-(advice-add #'+org|update-cookies :override #'+org*update-cookies)
-
-(add-hook! 'org-mode-hook (company-mode -1))
-(add-hook! 'org-capture-mode-hook (company-mode -1))
-
+;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
+;; are the three important ones:
+;;
+;; + `doom-font'
+;; + `doom-variable-pitch-font'
+;; + `doom-big-font' -- used for `doom-big-font-mode'
+;;
+;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
+;; font string. You generally only need these two:
 (setq
  doom-font (font-spec :family "Hack" :size 16)
  doom-big-font (font-spec :family "Hack" :size 22)
- doom-variable-pitch-font (font-spec :family "Hack" :size 14)
- dart-format-on-save t
- web-mode-markup-indent-offset 2
- web-mode-code-indent-offset 2
- web-mode-css-indent-offset 2
- mac-command-modifier 'meta
- org-agenda-skip-scheduled-if-done t
- js-indent-level 2
- typescript-indent-level 2
- json-reformat:indent-width 2
- prettier-js-args '("--single-quote")
- projectile-project-search-path '("~/code/")
- dired-dwim-target t
- org-ellipsis " ▾ "
- org-bullets-bullet-list '("·")
- org-tags-column -80
- org-agenda-files (ignore-errors (directory-files +org-dir t "\\.org$" t))
- org-log-done 'time
- css-indent-offset 2
- org-refile-targets (quote ((nil :maxlevel . 1)))
- org-capture-templates '(("x" "Note" entry
-                          (file+olp+datetree "journal.org")
-                          "**** [ ] %U %?" :prepend t :kill-buffer t)
-                         ("t" "Task" entry
-                          (file+headline "tasks.org" "Inbox")
-                          "* [ ] %?\n%i" :prepend t :kill-buffer t))
- +doom-dashboard-banner-file (expand-file-name "logo.png" doom-private-dir)
- +org-capture-todo-file "tasks.org"
- org-super-agenda-groups '((:name "Today"
-                                  :time-grid t
-                                  :scheduled today)
-                           (:name "Due today"
-                                  :deadline today)
-                           (:name "Important"
-                                  :priority "A")
-                           (:name "Overdue"
-                                  :deadline past)
-                           (:name "Due soon"
-                                  :deadline future)
-                           (:name "Big Outcomes"
-                                  :tag "bo")))
+ doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. These are the defaults.
+(setq doom-theme 'doom-one)
 
-(add-hook!
-  js2-mode 'prettier-js-mode
-  (add-hook 'before-save-hook #'refmt-before-save nil t))
-
-(map! :ne "M-/" #'comment-or-uncomment-region)
-(map! :ne "SPC / r" #'deadgrep)
-(map! :ne "SPC n b" #'org-brain-visualize)
-
-
-(def-package! org-fancy-priorities
+;; org settings
+(use-package org-fancy-priorities
   :hook (org-mode . org-fancy-priorities-mode)
   :config
   (setq org-fancy-priorities-list '("■" "■" "■")))
 
-;; (def-package! parinfer ; to configure it
-;;   :bind (("C-," . parinfer-toggle-mode)
-;;          ("<tab>" . parinfer-smart-tab:dwim-right)
-;;          ("S-<tab>" . parinfer-smart-tab:dwim-left))
-;;   :hook ((clojure-mode emacs-lisp-mode common-lisp-mode lisp-mode) . parinfer-mode)
-;;   :config (setq parinfer-extensions '(defaults pretty-parens evil paredit)))
-;;
 (after! org
   (set-face-attribute 'org-link nil
                       :weight 'normal
@@ -141,25 +91,23 @@
           ("DONE" :foreground "#50a14f" :weight normal :underline t)
           ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))))
 
-(after! web-mode
-  (add-to-list 'auto-mode-alist '("\\.njk\\'" . web-mode)))
-
-(defun +data-hideshow-forward-sexp (arg)
-  (let ((start (current-indentation)))
-    (forward-line)
-    (unless (= start (current-indentation))
-      (require 'evil-indent-plus)
-      (let ((range (evil-indent-plus--same-indent-range)))
-        (goto-char (cadr range))
-        (end-of-line)))))
-
-(add-to-list 'hs-special-modes-alist '(yaml-mode "\\s-*\\_<\\(?:[^:]+\\)\\_>" "" "#" +data-hideshow-forward-sexp nil))
-
-(setq +magit-hub-features t)
-
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+;; If you want to change the style of line numbers, change this to `relative' or
+;; `nil' to disable it:
+(setq display-line-numbers-type t)
 
 
-(set-popup-rule! "^\\*Org Agenda" :side 'bottom :size 0.90 :select t :ttl nil)
-(set-popup-rule! "^CAPTURE.*\\.org$" :side 'bottom :size 0.90 :select t :ttl nil)
-(set-popup-rule! "^\\*org-brain" :side 'right :size 1.00 :select t :ttl nil)
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', where Emacs
+;;   looks when you load packages with `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c g k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
+;; they are implemented.
