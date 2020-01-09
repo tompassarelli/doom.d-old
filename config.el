@@ -4,35 +4,43 @@
 ;; refresh' after modifying this file!
 
 
+
 ;; These are used for a number of things, particularly for GPG configuration,
 ;; some email clients, file templates and snippets.
 (setq user-full-name "Tom Passarelli"
       user-mail-address "tom.passarelli@protonmail.com")
 
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
+; -------- FONT --------
 (setq
  doom-font (font-spec :family "Hack" :size 16)
  doom-big-font (font-spec :family "Hack" :size 22)
  doom-variable-pitch-font (font-spec :family "Hack" :size 14))
+;; If you want to change the style of line numbers, change this to `relative' or
+;; `nil' to disable it:
+(setq display-line-numbers-type t)
 
+
+;; -------- THEME --------
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
 (setq doom-theme 'doom-one)
 
-;; org settings
-(use-package org-fancy-priorities
-  :hook (org-mode . org-fancy-priorities-mode)
-  :config
-  (setq org-fancy-priorities-list '("■" "■" "■")))
+
+;; -- DEVELOPMENT CONFIG --
+(setq projectile-project-search-path '("~/code/"))
+
+;; Angular
+ (use-package! ng2-mode
+    :defer t)
+
+
+;;--------------- ORG MODE ------------------
+;;(use-package org-fancy-priorities
+;;  :hook
+;;  (org-mode . org-fancy-priorities-mode)
+;;  :config
+;;  (setq org-fancy-priorities-list '("■" "■" "■")))
 
 (after! org
   (set-face-attribute 'org-link nil
@@ -77,24 +85,27 @@
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
   (setq org-agenda-skip-scheduled-if-done t
+        org-directory "~/org/"
+        org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
+        org-bullets-bullet-list '("⁖")
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
+        org-todo-keyword-faces
+        '(("TODO"       :foreground "#7c7c78" :weight normal :underline t)
+          ("WAITING"    :foreground "#9f7efe" :weight normal :underline t)
+          ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+          ("DONE"       :foreground "#50a14f" :weight normal :underline t)
+          ("CANCELLED"  :foreground "#ff6480" :weight normal :underline t))
         org-priority-faces '((?A :foreground "#e45649")
                              (?B :foreground "#da8548")
                              (?C :foreground "#0098dd"))
-        org-directory "~/org/"
-        org-bullets-bullet-list '("⁖")
-        org-tags-column -80
-        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
-        org-todo-keyword-faces
-        '(("TODO" :foreground "#7c7c78" :weight normal :underline t)
-          ("WAITING" :foreground "#9f7efe" :weight normal :underline t)
-          ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
-          ("DONE" :foreground "#50a14f" :weight normal :underline t)
-          ("CANCELLED" :foreground "#ff6480" :weight normal :underline t))))
+        ))
 
-;; If you want to change the style of line numbers, change this to `relative' or
-;; `nil' to disable it:
-(setq display-line-numbers-type t)
+(defun org-summary-todo (n-done n-not-done)
+  "Switch entry to DONE when all subentries are done, to TODO otherwise."
+  (let (org-log-done org-log-states)   ; turn off logging
+    (org-todo (if (= n-not-done 0) "DONE" "TODO"))))
 
+(add-hook 'org-after-todo-statistics-hook 'org-summary-todo)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
