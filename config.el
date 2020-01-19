@@ -3,8 +3,6 @@
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; refresh' after modifying this file!
 
-
-
 ;; These are used for a number of things, particularly for GPG configuration,
 ;; some email clients, file templates and snippets.
 (setq user-full-name "Tom Passarelli"
@@ -12,9 +10,9 @@
 
 ; -------- FONT --------
 (setq
- doom-font (font-spec :family "Hack" :size 16)
- doom-big-font (font-spec :family "Hack" :size 22)
- doom-variable-pitch-font (font-spec :family "Hack" :size 14))
+  doom-font (font-spec :family "Hack" :size 16)
+  doom-big-font (font-spec :family "Hack" :size 22)
+  doom-variable-pitch-font (font-spec :family "Hack" :size 14))
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
 (setq display-line-numbers-type t)
@@ -24,23 +22,56 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-city-lights)
 
 
-;; -- DEVELOPMENT CONFIG --
+;; -- DEVELOPMENT CONFIG GLOBAL --
 (setq projectile-project-search-path '("~/code/"))
 
-;; Angular
- (use-package! ng2-mode
-    :defer t)
+;;(after! yasnippet
+;;  (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 
+; Treemacs (open file on specific window, etc_
+(map! :after treemacs
+      :map treemacs-mode-map
+      "S-RET" #'treemacs-visit-node-ace)
 
-;;--------------- ORG MODE ------------------
+;; --------------------------------
+
+;; ------- Javascript -------
+(setq js-indent-level 2
+      js2-basic-offset 2)
+
+;; ------- Angular ----------
+;; angular-language-server
+(after! lsp-mode
+  (setq lsp-clients-angular-language-server-command
+  '("node"
+    "/usr/local/lib/node_modules/@angular/language-server"
+    "--ngProbeLocations"
+    "/usr/local/lib/node_modules"
+    "--tsProbeLocations"
+    "/usr/local/lib/node_modules"
+    "--stdio")))
+
+;; ng-2 mode
+;;(use-package! ng2-mode
+;;  :defer t)
+;;(with-eval-after-load 'typescript-mode
+;;  (add-hook 'typescript-mode-hook #'lsp))
+
+;;-------- ORG MODE -------------
 ;;(use-package org-fancy-priorities
 ;;  :hook
 ;;  (org-mode . org-fancy-priorities-mode)
 ;;  :config
 ;;  (setq org-fancy-priorities-list '("■" "■" "■")))
+;;
+;;
+
+(use-package org
+  :init (setq org-directory "~/org/")
+  )
 
 (after! org
   (set-face-attribute 'org-link nil
@@ -85,8 +116,13 @@
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
   (setq org-agenda-skip-scheduled-if-done t
-        org-directory "~/org/"
         org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
+        ;;org-default-notes-file (concat org-directory "/driver/inbox.org")
+        org-capture-templates
+         '(("t" "fun" entry (file+headline "~/org/driver/inbox.org" "Tasks")
+           "* TODO %?\n  %i\n  %a")
+           ("j" "Journal" entry (file+datetree "~/org/driver/journal.org")
+           "* %?\nEntered on %U\n  %i\n  %a"))
         org-bullets-bullet-list '("⁖")
         org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)"))
         org-todo-keyword-faces

@@ -50,6 +50,21 @@
 ;; This is required for some packages whose default branch isn't 'master' (which
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
+
+;; org
 (package! org-fancy-priorities)
-(package! ng2-mode)
-(package! dumb-jump)
+
+;; dev-global
+
+;; have become less dumb so no longer need this one
+; (package! dumb-jump)
+
+;; dev-ui
+;(package! eldoc-box)
+;(package! eldoc-overlay)                                  ;
+;k
+;; javascript
+(package! prettier-js)
+
+;; angular
+;;(package! ng2-mode)
