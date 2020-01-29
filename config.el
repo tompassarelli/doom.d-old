@@ -22,21 +22,30 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-(setq doom-theme 'doom-city-lights)
+(setq doom-theme 'doom-vibrant)
 
 
-;; -- DEVELOPMENT CONFIG GLOBAL --
+;;; -- DEVELOPMENT CONFIG GLOBAL --
 (setq projectile-project-search-path '("~/code/"))
 
 ;;(after! yasnippet
 ;;  (push (expand-file-name "snippets/" doom-private-dir) yas-snippet-dirs))
 
-; Treemacs (open file on specific window, etc_
+;; Treemacs (open file on specific window, etc_
 (map! :after treemacs
       :map treemacs-mode-map
       "S-RET" #'treemacs-visit-node-ace)
 
-;; --------------------------------
+;; ---------- LSP --------------
+;(after! lsp-ui
+; (setq lsp-ui-doc-mode t
+;       lsp-ui-doc-enable t
+;       lsp-ui-doc-max-width 180
+;       lsp-ui-doc-max-height 60
+;       lsp-ui-sideline-show-symbol t
+;        lsp-ui-doc-use-childframe t))
+
+;;; --------------------------------
 
 ;; ------- Javascript -------
 (setq js-indent-level 2
@@ -54,11 +63,19 @@
     "/usr/local/lib/node_modules"
     "--stdio")))
 
+
 ;; ng-2 mode
 ;;(use-package! ng2-mode
 ;;  :defer t)
 ;;(with-eval-after-load 'typescript-mode
 ;;  (add-hook 'typescript-mode-hook #'lsp))
+
+;; -------- Python -----------
+;(after! lsp-python-ms
+;  :ensure t
+;  :hook (python-mode . (lambda ()
+;                          (require 'lsp-python-ms)
+;                          (lsp))))  ; or lsp-deferred
 
 ;;-------- ORG MODE -------------
 ;;(use-package org-fancy-priorities

@@ -56,15 +56,28 @@
 
 ;; dev-global
 
-;; have become less dumb so no longer need this one
 ; (package! dumb-jump)
 
 ;; dev-ui
-;(package! eldoc-box)
-;(package! eldoc-overlay)                                  ;
-;k
+(package! eldoc-box)
+(package! eldoc-overlay)                                  ;
+
 ;; javascript
 (package! prettier-js)
 
 ;; angular
 ;;(package! ng2-mode)
+
+;; python
+;(package! lsp-python-ms)
+
+;;
+;;
+;;
+;;
+;;
+;;
+;;
+;;
+;;
+;;
