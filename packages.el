@@ -51,12 +51,16 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
+;; social
+(package! slack)
+
 ;; org
 (package! org-fancy-priorities)
+; (package! org-kanban) unfortunatley busted when using attachments
+(package! org-super-agenda)
 
 ;; dev-global
-
-; (package! dumb-jump)
+; (package! dumb-jump)...aready installed
 
 ;; dev-ui
 (package! eldoc-box)
@@ -70,14 +74,3 @@
 
 ;; python
 ;(package! lsp-python-ms)
-
-;;
-;;
-;;
-;;
-;;
-;;
-;;
-;;
-;;
-;;
