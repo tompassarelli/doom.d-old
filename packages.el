@@ -51,26 +51,32 @@
 ;; our package manager can't deal with; see raxod502/straight.el#279)
 ;(package! builtin-package :recipe (:branch "develop"))
 
-;; social
-(package! slack)
+; -------------------- ;
 
-;; org
-(package! org-fancy-priorities)
-; (package! org-kanban) unfortunatley busted when using attachments
-(package! org-super-agenda)
 
-;; dev-global
+;;; dev-global
 ; (package! dumb-jump)...aready installed
+(package! visual-fill-column)
 
-;; dev-ui
+; dev-ui
 (package! eldoc-box)
 (package! eldoc-overlay)                                  ;
 
-;; javascript
+; javascript
 (package! prettier-js)
 
-;; angular
-;;(package! ng2-mode)
+; angular
+; (package! ng2-mode)
 
-;; python
+; python
 ;(package! lsp-python-ms)
+
+; ---------------------- ;
+
+;; social
+(package! slack)
+
+;;; org
+(package! org-fancy-priorities)
+;; (package! org-kanban) unfortunatley busted when using attachments
+(package! org-super-agenda)

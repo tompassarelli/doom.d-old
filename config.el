@@ -8,7 +8,7 @@
 (setq user-full-name "Tom Passarelli"
       user-mail-address "tom.passarelli@protonmail.com")
 
-; -------- FONT --------
+; -------- Font and Spacing --------
 (setq
   doom-font (font-spec :family "Hack" :size 16)
   doom-big-font (font-spec :family "Hack" :size 22)
@@ -148,6 +148,7 @@
   (setq org-directory "~/org/"))
 
 (after! org
+  (setq org-log-done 'time)
   ;; (setq org-super-agenda-mode t)
   ;; (setq ((org-super-agenda-groups
   ;;      '(;; Each group has an implicit boolean OR operator between its selectors.
@@ -234,6 +235,7 @@
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
   (setq org-agenda-skip-scheduled-if-done t
+        org-tags-exclude-from-inheritance '("c1_3")
         ;;org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
         org-agenda-files (list org-directory)
         org-bullets-bullet-list '("⁖")
@@ -248,10 +250,6 @@
         org-priority-faces '((?A :foreground "#e45649")
                              (?B :foreground "#da8548")
                              (?C :foreground "#0098dd")))
-  (setq org-tags-exclude-from-inheritance t)
-  (setq org-tags-exclude-from-inheritance
-        '((:group 'cycle1_3)
-          (:type '(repeat (string :tag "Tag")))))
   )
 
 
