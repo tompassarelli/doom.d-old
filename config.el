@@ -130,69 +130,11 @@
 
 ;;-------- ORG MODE -------------
 ;;
-;; (use-package org-fancy-priorities
-;;   :hook
-;;   (org-mode . org-fancy-priorities-mode)
-;;   :config
-;;   (setq org-fancy-priorities-list '("■" "■" "■")))
-;;
-;;
-;;(setq +org-capture-todo-file "driver/todo.org")
-;;(setq +org-capture-changelog-file "driver/changelog.org")
-;;(setq +org-capture-notes-file "driver/capture.org")
-;;(setq +org-capture-journal-file "driver/journal.org")
-;;(setq +org-capture-projects-file "driver/projects.org")
-
 (use-package org
   :init
   (setq org-directory "~/org/"))
 
 (after! org
-  (setq org-log-done 'time)
-  ;; (setq org-super-agenda-mode t)
-  ;; (setq ((org-super-agenda-groups
-  ;;      '(;; Each group has an implicit boolean OR operator between its selectors.
-  ;;        (:name "Today"  ; Optionally specify section name
-  ;;               :time-grid t  ; Items that appear on the time grid
-  ;;               :todo "TODAY")  ; Items that have this TODO keyword
-  ;;        (:name "Important"
-  ;;               ;; Single arguments given alone
-  ;;               :tag "bills"
-  ;;               :priority "A")
-  ;;        ;; Set order of multiple groups at once
-  ;;        (:order-multi (2 (:name "Shopping in town"
-  ;;                                ;; Boolean AND group matches items that match all subgroups
-  ;;                                :and (:tag "shopping" :tag "@town"))
-  ;;                         (:name "Food-related"
-  ;;                                ;; Multiple args given in list with implicit OR
-  ;;                                :tag ("food" "dinner"))
-  ;;                         (:name "Personal"
-  ;;                                :habit t
-  ;;                                :tag "personal")
-  ;;                         (:name "Space-related (non-moon-or-planet-related)"
-  ;;                                ;; Regexps match case-insensitively on the entire entry
-  ;;                                :and (:regexp ("space" "NASA")
-  ;;                                              ;; Boolean NOT also has implicit OR between selectors
-  ;;                                              :not (:regexp "moon" :tag "planet")))))
-  ;;        ;; Groups supply their own section names when none are given
-  ;;        (:todo "WAITING" :order 8)  ; Set order of this section
-  ;;        (:todo ("SOMEDAY" "TO-READ" "CHECK" "TO-WATCH" "WATCHING")
-  ;;               ;; Show this group at the end of the agenda (since it has the
-  ;;               ;; highest number). If you specified this group last, items
-  ;;               ;; with these todo keywords that e.g. have priority A would be
-  ;;               ;; displayed in that group instead, because items are grouped
-  ;;               ;; out in the order the groups are listed.
-  ;;               :order 9)
-  ;;        (:priority<= "B"
-  ;;                     ;; Show this section after "Today" and "Important", because
-  ;;                     ;; their order is unspecified, defaulting to 0. Sections
-  ;;                     ;; are displayed lowest-number-first.
-  ;;                     :order 1)
-  ;;        ;; After the last group, the agenda will display items that didn't
-  ;;        ;; match any of these groups, with the default order position of 99
-  ;;        )))
-  ;; (org-agenda nil "a"))
-
   (set-face-attribute 'org-link nil
                       :weight 'normal
                       :background nil)
@@ -234,24 +176,65 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
-  (setq org-agenda-skip-scheduled-if-done t
-        org-tags-exclude-from-inheritance '("c1_3")
-        ;;org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
-        org-agenda-files (list org-directory)
+  (setq org-log-done '(time)
+        org-tag-alist '((:startgrouptag)
+                        ("e1")
+                        (:grouptags)
+                        ("p1b3")
+                        (:endgrouptag)
+                        (:startgrouptag)
+                        ("p1b3")
+                        (:grouptags)
+                        ("s0")
+                        ("s1")
+                        ("s2")
+                        ("s3")
+                        (:endgrouptag))
+        org-use-tag-inheritance '(nil)
+        ;; org-tags-exclude-from-inheritance later...exp deny some tags
         org-bullets-bullet-list '("⁖")
-        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "FAILED(f)"))
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "FAILED(f)")
+                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)"))
         org-todo-keyword-faces
         '(("TODO"       :foreground "#7c7c78" :weight normal :underline t)
           ("WAITING"    :foreground "#9f7efe" :weight normal :underline t)
           ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
           ("DONE"       :foreground "#50a14f" :weight normal :underline t)
           ("CANCELLED"  :foreground "#80808A" :weight normal :underline t)
-          ("FAILED"     :foreground "#ff6480" :weight normal :underline t))
-        org-priority-faces '((?A :foreground "#e45649")
-                             (?B :foreground "#da8548")
-                             (?C :foreground "#0098dd")))
-  )
+          ("FAILED"     :foreground "#ff6480" :weight normal :underline t)
+          ("[-]"  . +org-todo-active)
+          ("INPROGRESS" . +org-todo-active)
+          ("[?]"  . +org-todo-onhold)
+          ("WAITING" . +org-todo-onhold))
+          org-priority-faces '((?A :foreground "#e45649")
+                               (?B :foreground "#da8548")
+                               (?C :foreground "#0098dd"))))
 
+ (use-package! org-super-agenda
+  :after org-agenda
+  :init
+  (setq org-agenda-files (list org-directory)
+        ;;org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
+        ;;  org-agenda-skip-deadline-if-done t
+        org-agenda-include-deadlines t
+        org-agenda-block-separator nil
+        org-agenda-compact-blocks t
+        org-agenda-skip-scheduled-if-done t
+        org-super-agenda-groups '((:name "Today"
+                                         :time-grid t
+                                         :scheduled today)
+                                  (:name "Due today"
+                                       :deadline today)
+                                  (:name "Important"
+                                       :priority "A")
+                                  (:name "Overdue"
+                                       :deadline past)
+                                  (:name "Due soon"
+                                       :deadline future)
+                                  (:name "Waiting"
+                                       :todo "WAIT")))
+  :config
+  (org-super-agenda-mode))
 
 ;; -- REFERENCE --
 ;; Here are some additional functions/macros that could help you configure Doom:

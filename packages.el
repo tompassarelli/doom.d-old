@@ -77,6 +77,5 @@
 (package! slack)
 
 ;;; org
-(package! org-fancy-priorities)
-;; (package! org-kanban) unfortunatley busted when using attachments
 (package! org-super-agenda)
+;; (package! org-kanban) unfortunatley busted when using attachments
