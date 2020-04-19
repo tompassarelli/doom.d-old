@@ -70,7 +70,6 @@
 ;;             "s" 'slack-message-send-from-buffer
 ;;             "2" 'slack-message-embed-mention
 ;;             "3" 'slack-message-embed-channel))))
-
 ;; (use-package alert
 ;;   :commands alert
 ;;   :init (setq alert-default-style 'notifier))
@@ -114,14 +113,7 @@
     "/usr/local/lib/node_modules"
     "--stdio")))
 
-
-;; ng-2 mode - no longer needed with lsp
-;;(use-package! ng2-mode
-;;  :defer t)
-;;(with-eval-after-load 'typescript-mode
-;;  (add-hook 'typescript-mode-hook #'lsp))
-
-;; -------- Python - for when the unix commands aren't quite stronk enough -----------
+;; -------- Python  -------------
 ;(after! lsp-python-ms
 ;  :ensure t
 ;  :hook (python-mode . (lambda ()

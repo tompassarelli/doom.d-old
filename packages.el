@@ -78,4 +78,4 @@
 
 ;;; org
 (package! org-super-agenda)
-;; (package! org-kanban) unfortunatley busted when using attachments
+;; (package! org-kanban) busted when using attachments
