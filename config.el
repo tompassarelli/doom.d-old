@@ -168,6 +168,13 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
+  ;; This is for agile-style prioritization and project management
+  ;; It's very much in the style of Jira with the substitution of
+  ;; "intiatives" with "epochs" and "epics" with
+  ;; TODO refactor this hierarchy in the following way
+  ;;   - TODO Regular expressions, this list will get too long
+  ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
+  ;; project specific tags apply as a_pname_s1
   (setq org-log-done '(time)
         org-tag-alist '((:startgrouptag)
                         ("e1")
