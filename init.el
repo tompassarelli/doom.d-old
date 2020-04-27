@@ -81,6 +81,7 @@
 
        :checkers
        syntax          ; tasing you for every semicolon you forget
+       ;; spell
        ;; grammar
 
        :tools
@@ -93,15 +94,13 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;flyspell          ; tasing you for misspelling mispelling
        ;;gist              ; interacting with github gists
-       (lookup           ; helps you navigate your code and documentation
-        +docsets
-        +dictionary)        ; ...or in Dash docsets locally
+       lookup           ; helps you navigate your code and documentation
        lsp
        ;;macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        (pass +auth)              ; password manager for nerds
-       ;;pdf               ; pdf enhancements
+       pdf               ; pdf enhancements
        ;;prodigy           ; FIXME managing external services & code builders
        ;;rgb               ; creating color strings
        ;;terraform         ; infrastructure as code
@@ -178,8 +177,6 @@
        calendar
        irc               ; how neckbeards socialize
        ;;(rss +org)        ; emacs as an RSS reader
-       ;;twitter           ; twitter client https://twitter.com/vnought
-       ;;write             ; emacs for writers (fiction, notes, papers, etc.)
 
        :config
        ;;literate

@@ -101,7 +101,7 @@
 (setq js-indent-level 2
       js2-basic-offset 2)
 
-;; ------- Angular - To appease the google overlords ----------
+;; ------- Angular --------------
 ;; angular-language-server
 (after! lsp-mode
   (setq lsp-clients-angular-language-server-command
@@ -176,19 +176,19 @@
   ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
   ;; project specific tags apply as a_pname_s1
   (setq org-log-done '(time)
-        org-tag-alist '((:startgrouptag)
-                        ("e1")
-                        (:grouptags)
-                        ("p1b3")
-                        (:endgrouptag)
-                        (:startgrouptag)
-                        ("p1b3")
-                        (:grouptags)
-                        ("s0")
-                        ("s1")
-                        ("s2")
-                        ("s3")
-                        (:endgrouptag))
+        ;; org-tag-alist '((:startgrouptag)
+        ;;                 ("e1")
+        ;;                 (:grouptags)
+        ;;                 ("p1b3")
+        ;;                 (:endgrouptag)
+        ;;                 (:startgrouptag)
+        ;;                 ("p1b3")
+        ;;                 (:grouptags)
+        ;;                 ("s0")
+        ;;                 ("s1")
+        ;;                 ("s2")
+        ;;                 ("s3")
+        ;;                 (:endgrouptag))
         org-use-tag-inheritance '(nil)
         ;; org-tags-exclude-from-inheritance later...exp deny some tags
         org-bullets-bullet-list '("⁖")
