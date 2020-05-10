@@ -193,7 +193,7 @@
         ;; org-tags-exclude-from-inheritance later...exp deny some tags
         org-bullets-bullet-list '("⁖")
         org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "FAILED(f)")
-                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)"))
+                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)" "[C](C)" "[F](F)" ))
         org-todo-keyword-faces
         '(("TODO"       :foreground "#7c7c78" :weight normal :underline t)
           ("WAITING"    :foreground "#9f7efe" :weight normal :underline t)
