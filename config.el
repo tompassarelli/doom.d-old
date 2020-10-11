@@ -17,6 +17,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
+;; 'doom-solarized-light doom-vibrant
 (setq doom-theme 'doom-vibrant)
 
 ;;; -- Slack --
@@ -170,6 +171,16 @@
   ;;   - TODO Regular expressions, this list will get too long
   ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
   ;; project specific tags apply as a_pname_s1
+  (defun fw/agenda-icon-material (name)
+  "Returns an all-the-icons-material icon"
+  (list (all-the-icons-material name)))
+
+  ;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
+  (setq org-agenda-category-icon-alist
+      `(("Birthday" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
+        ("Today" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
+        ("Anniversary" ,(fw/agenda-icon-material "favorite") nil nil :ascent center)))
+
   (setq org-log-done '(time)
         ;; org-tag-alist '((:startgrouptag)
         ;;                 ("e1")
@@ -187,8 +198,8 @@
         org-use-tag-inheritance '(nil)
         ;; org-tags-exclude-from-inheritance later...exp deny some tags
         org-bullets-bullet-list '("⁖")
-        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)" "FAILED(f)")
-                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)" "[C](C)" "[F](F)" ))
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")
+                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)" "[C](C)"))
         org-todo-keyword-faces
         '(("TODO"       :foreground "#7c7c78" :weight normal :underline t)
           ("WAITING"    :foreground "#9f7efe" :weight normal :underline t)
@@ -208,12 +219,15 @@
   :after org-agenda
   :init
   (setq org-agenda-files (list org-directory)
-        ;;org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
+        ;;(see above for replacement) org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
         ;;org-agenda-skip-deadline-if-done t
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
         org-agenda-compact-blocks t
         org-agenda-skip-scheduled-if-done t
+        org-agenda-start-day "1d"
+        org-agenda-span '5
+        org-agenda-start-on-weekday nil
         org-super-agenda-groups '((:name "Today"  ; Optionally specify section name
                                          :time-grid t  ; Items that appear on the time grid
                                          :scheduled today)  ; Items that have this TODO keyword
@@ -256,43 +270,6 @@
         (org-super-agenda-mode)
 
 ;; -- REFERENCE --
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
