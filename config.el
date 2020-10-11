@@ -97,17 +97,17 @@
 (setq js-indent-level 2
       js2-basic-offset 2)
 
-;; ------- Angular --------------
-;; angular-language-server
-(after! lsp-mode
-  (setq lsp-clients-angular-language-server-command
-  '("node"
-    "/usr/local/lib/node_modules/@angular/language-server"
-    "--ngProbeLocations"
-    "/usr/local/lib/node_modules"
-    "--tsProbeLocations"
-    "/usr/local/lib/node_modules"
-    "--stdio")))
+;;; ------- Angular --------------
+;;; angular-language-server
+;; (after! lsp-mode
+;;   (setq lsp-clients-angular-language-server-command
+;;   '("node"
+;;     "/usr/local/lib/node_modules/@angular/language-server"
+;;     "--ngProbeLocations"
+;;     "/usr/local/lib/node_modules"
+;;     "--tsProbeLocations"
+;;     "/usr/local/lib/node_modules"
+;;     "--stdio")))
 
 ;; -------- Python  -------------
 ;(after! lsp-python-ms
@@ -195,8 +195,8 @@
         ;;                 ("s2")
         ;;                 ("s3")
         ;;                 (:endgrouptag))
-        org-use-tag-inheritance '(nil)
         ;; org-tags-exclude-from-inheritance later...exp deny some tags
+        org-use-tag-inheritance '(nil)
         org-bullets-bullet-list '("⁖")
         org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")
                             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)" "[C](C)"))
