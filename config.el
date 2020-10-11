@@ -171,15 +171,16 @@
   ;;   - TODO Regular expressions, this list will get too long
   ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
   ;; project specific tags apply as a_pname_s1
-  (defun fw/agenda-icon-material (name)
-  "Returns an all-the-icons-material icon"
-  (list (all-the-icons-material name)))
+
+  ;;(defun fw/agenda-icon-material (name)
+  ;;"Returns an all-the-icons-material icon"
+  ;;(list (all-the-icons-material name)))
 
   ;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
-  (setq org-agenda-category-icon-alist
-      `(("Birthday" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
-        ("Today" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
-        ("Anniversary" ,(fw/agenda-icon-material "favorite") nil nil :ascent center)))
+  ;(setq org-agenda-category-icon-alist
+  ;    `(("Birthday" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
+  ;      ("Today" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
+  ;      ("Anniversary" ,(fw/agenda-icon-material "favorite") nil nil :ascent center)))
 
   (setq org-log-done '(time)
         ;; org-tag-alist '((:startgrouptag)
