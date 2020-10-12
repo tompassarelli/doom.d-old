@@ -73,6 +73,7 @@
        electric          ; smarter, keyword-based electric-indent
        ;;ibuffer           ; interactive buffer management
        vc                ; version-control and Emacs, sitting in a tree
+       undo              ; urggggg 26.3 sucks
 
        :term
        eshell              ; a consistent, cross-platform shell (WIP)
@@ -148,6 +149,7 @@
         +dragndrop       ; drag & drop files/images into org buffers
         +journal
         +hugo            ; use Emacs for hugo blogging
+        ;;+pretty       ; sparkles and stuff
         ;;+jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
         +pomodoro        ; be fruitful with the tomato technique
