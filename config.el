@@ -221,11 +221,10 @@
   :init
   (setq org-agenda-files (list org-directory)
         ;;(see above for replacement) org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
-        ;;org-agenda-skip-deadline-if-done t
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
         org-agenda-compact-blocks t
-        org-agenda-skip-scheduled-if-done t
+        ;org-agenda-skip-scheduled-if-done t
         org-agenda-start-day "1d"
         org-agenda-span '5
         org-agenda-start-on-weekday nil
