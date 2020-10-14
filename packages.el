@@ -18,7 +18,7 @@
 ;(package! lsp-python-ms)
 
 ;; social
-(package! slack)
+;;(package! slack)
 
 ;;; org
 (package! org-super-agenda)
