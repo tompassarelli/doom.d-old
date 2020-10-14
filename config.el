@@ -164,41 +164,10 @@
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
-  ;; This is for agile-style prioritization and project management
-  ;; It's very much in the style of Jira with the substitution of
-  ;; "intiatives" with "epochs" and "epics" with
-  ;; TODO refactor this hierarchy in the following way
-  ;;   - TODO Regular expressions, this list will get too long
-  ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
-  ;; project specific tags apply as a_pname_s1
-
-  ;;(defun fw/agenda-icon-material (name)
-  ;;"Returns an all-the-icons-material icon"
-  ;;(list (all-the-icons-material name)))
-
-  ;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
-  ;(setq org-agenda-category-icon-alist
-  ;    `(("Birthday" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
-  ;      ("Today" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
-  ;      ("Anniversary" ,(fw/agenda-icon-material "favorite") nil nil :ascent center)))
-
   (setq org-log-done '(time)
-        ;; org-tag-alist '((:startgrouptag)
-        ;;                 ("e1")
-        ;;                 (:grouptags)
-        ;;                 ("p1b3")
-        ;;                 (:endgrouptag)
-        ;;                 (:startgrouptag)
-        ;;                 ("p1b3")
-        ;;                 (:grouptags)
-        ;;                 ("s0")
-        ;;                 ("s1")
-        ;;                 ("s2")
-        ;;                 ("s3")
-        ;;                 (:endgrouptag))
-        ;; org-tags-exclude-from-inheritance later...exp deny some tags
+        org-hide-emphasis-markers t)
         org-use-tag-inheritance '(nil)
-        org-bullets-bullet-list '("⁖")
+        ;;org-bullets-bullet-list '("⁖")
         org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")
                             (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)" "[C](C)"))
         org-todo-keyword-faces
@@ -214,7 +183,7 @@
           ("WAITING" . +org-todo-onhold))
           org-priority-faces '((?A :foreground "#e45649")
                                (?B :foreground "#da8548")
-                               (?C :foreground "#0098dd"))))
+                               (?C :foreground "#0098dd")))
 
  (use-package! org-super-agenda
   :after org-agenda
@@ -224,7 +193,7 @@
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
         org-agenda-compact-blocks t
-        ;org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-scheduled-if-done t
         org-agenda-start-day "1d"
         org-agenda-span '5
         org-agenda-start-on-weekday nil
@@ -286,3 +255,36 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+  ;; This is for agile-style prioritization and project management
+  ;; It's very much in the style of Jira with the substitution of
+  ;; "intiatives" with "epochs" and "epics" with
+  ;; TODO refactor this hierarchy in the following way
+  ;;   - TODO Regular expressions, this list will get too long
+  ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
+  ;; project specific tags apply as a_pname_s1
+
+  ;;(defun fw/agenda-icon-material (name)
+  ;;"Returns an all-the-icons-material icon"
+  ;;(list (all-the-icons-material name)))
+
+  ;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
+  ;(setq org-agenda-category-icon-alist
+  ;    `(("Birthday" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
+  ;      ("Today" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
+  ;      ("Anniversary" ,(fw/agenda-icon-material "favorite") nil nil :ascent center)))
+
+        ;; org-tag-alist '((:startgrouptag)
+        ;;                 ("e1")
+        ;;                 (:grouptags)
+        ;;                 ("p1b3")
+        ;;                 (:endgrouptag)
+        ;;                 (:startgrouptag)
+        ;;                 ("p1b3")
+        ;;                 (:grouptags)
+        ;;                 ("s0")
+        ;;                 ("s1")
+        ;;                 ("s2")
+        ;;                 ("s3")
+        ;;                 (:endgrouptag))
+        ;; org-tags-exclude-from-inheritance later...exp deny some tags
