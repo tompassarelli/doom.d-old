@@ -11,7 +11,7 @@
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
 (setq display-line-numbers-type t)
-
+(setq-default fill-column 100)
 
 ;; -------- THEME --------
 ;; There are two ways to load a theme. Both assume the theme is installed and

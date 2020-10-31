@@ -21,6 +21,7 @@
 ;;(package! slack)
 
 ;;; org
+(package! org-bullets)
 (package! org-super-agenda)
 ;; (package! org-kanban) busted when using attachments
 
