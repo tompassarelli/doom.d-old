@@ -5,20 +5,22 @@
 
 ; -------- Font and Spacing --------
 (setq
-  doom-font (font-spec :family "Hack" :size 16)
-  doom-big-font (font-spec :family "Hack" :size 22)
-  doom-variable-pitch-font (font-spec :family "Hack" :size 14))
+  doom-font (font-spec :family "Hack" :size 18)
+  doom-big-font (font-spec :family "Hack" :size 24)
+  doom-variable-pitch-font (font-spec :family "Hack" :size 16))
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
 (setq display-line-numbers-type t)
-(setq-default fill-column 100)
+;; (use-package! hl-fill-column-mode
+;;   :disabled t)
+;; (setq-default fill-column 100)
 
 ;; -------- THEME --------
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
 ;; 'doom-solarized-light doom-vibrant
-(setq doom-theme 'doom-vibrant)
+(setq doom-theme 'doom-solarized-light)
 
 ;;; -- Slack --
 
@@ -118,68 +120,40 @@
 
 ;;-------- ORG MODE -------------
 ;;
+(add-to-list 'doom-large-file-excluded-modes 'org-mode)
+;; (add-to-list 'exec-path "~/sqlite/sqlite3")
 (use-package org
   :init
-  (setq org-directory "~/Nextcloud/org"))
-
+  (setq org-directory "~/Nextcloud/org")
+  (setq org-roam-directory "~/Nextcloud/org/notes"))
 (after! org
-  (set-face-attribute 'org-link nil
-                      :weight 'normal
-                      :background nil)
-  (set-face-attribute 'org-code nil
-                      :foreground "#a9a1e1"
-                      :background nil)
-  (set-face-attribute 'org-date nil
-                      :foreground "#5B6268"
-                      :background nil)
-  (set-face-attribute 'org-level-1 nil
-                      :foreground "steelblue2"
-                      :background nil
-                      :height 1.2
-                      :weight 'normal)
-  (set-face-attribute 'org-level-2 nil
-                      :foreground "slategray2"
-                      :background nil
-                      :height 1.0
-                      :weight 'normal)
-  (set-face-attribute 'org-level-3 nil
-                      :foreground "SkyBlue2"
-                      :background nil
-                      :height 1.0
-                      :weight 'normal)
-  (set-face-attribute 'org-level-4 nil
-                      :foreground "DodgerBlue2"
-                      :background nil
-                      :height 1.0
-                      :weight 'normal)
-  (set-face-attribute 'org-level-5 nil
-                      :weight 'normal)
-  (set-face-attribute 'org-level-6 nil
-                      :weight 'normal)
-  (set-face-attribute 'org-document-title nil
-                      :foreground "SlateGray1"
-                      :background nil
-                      :height 1.75
-                      :weight 'bold)
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
+  (custom-set-faces
+  '(org-level-1 ((t (:inherit outline-1 :height 1.4))))
+  '(org-level-2 ((t (:inherit outline-2 :height 1.3))))
+  '(org-level-3 ((t (:inherit outline-3 :height 1.2))))
+  '(org-level-4 ((t (:inherit outline-4 :height 1.1))))
+  '(org-level-5 ((t (:inherit outline-5 :height 1.0))))
+  )
   (setq org-log-done '(time)
-        org-hide-emphasis-markers t)
+        org-hide-emphasis-markers '(t)
         org-use-tag-inheritance '(nil)
         ;;org-bullets-bullet-list '("⁖")
-        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "|" "DONE(d)" "CANCELLED(c)")
-                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)" "[C](C)"))
+        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "HOLD(h)" "|" "DONE(d)" "MISS(m)")
+                            (sequence "[ ](T)" "[-](I)" "[?](W)" "[~](H)" "|" "[X](D)" "[0](M)"))
         org-todo-keyword-faces
         '(("TODO"       :foreground "#7c7c78" :weight normal :underline t)
           ("WAITING"    :foreground "#9f7efe" :weight normal :underline t)
           ("INPROGRESS" :foreground "#0098dd" :weight normal :underline t)
+          ("HOLD"       :foreground "#80808A" :weight normal :underline t)
           ("DONE"       :foreground "#50a14f" :weight normal :underline t)
-          ("CANCELLED"  :foreground "#80808A" :weight normal :underline t)
-          ("FAILED"     :foreground "#ff6480" :weight normal :underline t)
+          ("MISS"       :foreground "#ff6480" :weight normal :underline t)
           ("[-]"  . +org-todo-active)
           ("INPROGRESS" . +org-todo-active)
           ("[?]"  . +org-todo-onhold)
+          ("UNDECIDED"  . +org-todo-onhold)
           ("WAITING" . +org-todo-onhold))
           org-priority-faces '((?A :foreground "#e45649")
                                (?B :foreground "#da8548")
@@ -193,17 +167,32 @@
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
         org-agenda-compact-blocks t
-        org-agenda-skip-scheduled-if-done t
+        ;; org-agenda-skip-scheduled-if-done t
+        org-agenda-todo-ignore-scheduled 'future
+        org-agenda-tags-todo-honor-ignore-options t
         org-agenda-start-day "1d"
-        org-agenda-span '5
+        org-agenda-span '7
         org-agenda-start-on-weekday nil
         org-super-agenda-groups '((:name "Today"  ; Optionally specify section name
                                          :time-grid t  ; Items that appear on the time grid
-                                         :scheduled today)  ; Items that have this TODO keyword
+                                         :scheduled today ; Items that have this TODO keyword
+                                  )
                                   (:name "Important"
                                          ;; Single arguments given alone
                                          :tag "bills"
                                          :priority "A")
+                                  (:name "Done"
+                                         :todo t
+                                         :scheduled past
+                                  )
+                                  ;; (:name "Not Done"
+                                  ;;        :todo t
+                                  ;;        :scheduled past
+                                  ;; )
+                                  ;; (:name "Week"
+                                  ;;        :todo t
+                                  ;;        :scheduled past
+                                  ;; )
                                   ;; Set order of multiple groups at once
                                   (:order-multi (2 (:name "Shopping in town" ;; Boolean AND group matches items that match all subgroups
                                                           :and (:tag "shopping" :tag "@town"))
@@ -235,8 +224,63 @@
                                   ;; match any of these groups, with the default order position of 99
                                   ))
                                   (org-agenda nil "a"))
+        (setq org-agenda-custom-commands
+        '(("z" "agenda controller"
+         ((today "" ((org-agenda-span 'day)
+                      (org-super-agenda-groups
+                       '((:name "Today"
+                                :time-grid t
+                                :date today
+                                :todo "TODAY"
+                                :scheduled today
+                                :order 1)))))
+          (backlog "" ((org-agenda-overriding-header "")
+                       (org-super-agenda-groups
+                        '((:name "Next to do"
+                                 :todo "NEXT"
+                                 :order 1)
+                          (:name "Important"
+                                 :tag "Important"
+                                 :priority "A"
+                                 :order 6)
+                          (:name "Due Today"
+                                 :deadline today
+                                 :order 2)
+                          (:name "Due Soon"
+                                 :deadline future
+                                 :order 8)
+                          (:name "Overdue"
+                                 :deadline past
+                                 :order 7)
+                          (:name "Assignments"
+                                 :tag "Assignment"
+                                 :order 10)
+                          (:name "Issues"
+                                 :tag "Issue"
+                                 :order 12)
+                          (:name "Projects"
+                                 :tag "Project"
+                                 :order 14)
+                          (:name "Emacs"
+                                 :tag "Emacs"
+                                 :order 13)
+                          (:name "Research"
+                                 :tag "Research"
+                                 :order 15)
+                          (:name "To read"
+                                 :tag "Read"
+                                 :order 30)
+                          (:name "Waiting"
+                                 :todo "WAITING"
+                                 :order 20)
+                          (:name "trivial"
+                                 :priority<= "C"
+                                 :tag ("Trivial" "Unimportant")
+                                 :todo ("SOMEDAY" )
+                                 :order 90)
+                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
         :config
-        (org-super-agenda-mode)
+        (org-super-agenda-mode))
 
 ;; -- REFERENCE --
 ;; Here are some additional functions/macros that could help you configure Doom:

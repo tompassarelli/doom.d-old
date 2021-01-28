@@ -29,7 +29,7 @@
        doom              ; what makes DOOM look the way it does
        doom-dashboard    ; a nifty splash screen for Emacs
        doom-quit         ; DOOM quit-message prompts when you quit Emacs
-       fill-column     ; a `fill-column' indicator
+       ;fill-column     ; a `fill-column' indicator
        hl-todo           ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        ;;indent-guides     ; highlighted indent columns
@@ -67,13 +67,13 @@
 
        :emacs
        (dired            ; making dired pretty [functional]
-       ;;+ranger         ; bringing the goodness of ranger to dired
-       +icons          ; colorful icons for dired-mode
+       ;;+ranger           ; bringing the goodness of ranger to dired
+       +icons            ; colorful icons for dired-mode
        )        
        electric          ; smarter, keyword-based electric-indent
        ;;ibuffer           ; interactive buffer management
        vc                ; version-control and Emacs, sitting in a tree
-       undo              ; urggggg 26.3 sucks
+       (undo +tree)      ; urggggg 26.3 sucks
 
        :term
        eshell              ; a consistent, cross-platform shell (WIP)
@@ -149,6 +149,7 @@
         +dragndrop       ; drag & drop files/images into org buffers
         +journal
         +hugo            ; use Emacs for hugo blogging
+	+roam
         ;;+pretty       ; sparkles and stuff
         ;;+jupyter        ; ipython/jupyter support for babel
         ;;+pandoc          ; export-with-pandoc support
