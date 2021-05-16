@@ -127,6 +127,8 @@
   (setq org-directory "~/Nextcloud/org")
   (setq org-roam-directory "~/Nextcloud/org/notes"))
 (after! org
+  (setq visual-fill-column-mode t
+        visual-line-mode t)
   (map! :map org-mode-map
         :n "M-j" #'org-metadown
         :n "M-k" #'org-metaup)
@@ -162,7 +164,7 @@
  (use-package! org-super-agenda
   :after org-agenda
   :init
-  (setq org-agenda-files (list org-directory)
+  (setq org-agenda-files (list org-roam-directory)
         ;;(see above for replacement) org-agenda-files (directory-files-recursively "~/org/" "\\.org$")
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
