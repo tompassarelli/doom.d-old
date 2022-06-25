@@ -6,7 +6,7 @@
 ; -------- Font and Spacing --------
 (setq
   doom-font (font-spec :family "Hack" :size 18)
-  doom-big-font (font-spec :family "Hack" :size 24)
+  doom-big-font (font-spec :family "Hack" :size 22)
   doom-variable-pitch-font (font-spec :family "Hack" :size 16))
 ;; If you want to change the style of line numbers, change this to `relative' or
 ;; `nil' to disable it:
@@ -19,58 +19,8 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. These are the defaults.
-;; 'doom-solarized-light doom-vibrant
+;; 'doom-solarized-light doom-vibrant doom-nord
 (setq doom-theme 'doom-solarized-light)
-
-;;; -- Slack --
-
-;; config.el
-;; (use-package slack
-;;   :commands slack-start
-;;   :init
-;;   (setq slack-buffer-emojify t) ;; if you want to enable emoji, default nil
-;;   (setq slack-prefer-current-team t)
-;;   :config
-;;   (slack-register-team
-;;    :name "emacs-slack"
-;;    :default t
-;;    :token "TODO pull from authsource"
-;;    :subscribed-channels '(test-rename rrrrr)
-;;    :full-and-display-names t)
-
-;;   (slack-register-team
-;;    :name "test"
-;;    :token "TODO pull from authsource"
-;;    :subscribed-channels '(rtc))
-
-;;   (map! (:map slack-info-mode-map
-;;           "u" #'slack-room-update-messages)
-;;         (:map slack-mode-map
-;;           "C-n" 'slack-buffer-goto-next-message
-;;           "C-p" 'slack-buffer-goto-prev-message)
-;;         (:localleader
-;;           (:map slack-mode-map
-;;             "c" 'slack-buffer-kill
-;;             "ra" 'slack-message-add-reaction
-;;             "rr" 'slack-message-remove-reaction
-;;             "rs" 'slack-message-show-reaction-users
-;;             "pl" 'slack-room-pins-list
-;;             "pa" 'slack-message-pins-add
-;;             "pr" 'slack-message-pins-remove
-;;             "mm" 'slack-message-write-another-buffer
-;;             "me" 'slack-message-edit
-;;             "md" 'slack-message-delete
-;;             "u" 'slack-room-update-messages
-;;             "2" 'slack-message-embed-mention
-;;             "3" 'slack-message-embed-channel)
-;;           (:map slack-edit-message-mode-map
-;;             "k" 'slack-message-cancel-edit
-;;             "s" 'slack-message-send-from-buffer
-;;             "2" 'slack-message-embed-mention
-;;             "3" 'slack-message-embed-channel))))
-;; (use-package alert
-;;   :commands alert
-;;   :init (setq alert-default-style 'notifier))
 
 ;;; -- DEVELOPMENT CONFIG GLOBAL --
 (setq projectile-project-search-path '("~/code/"))
@@ -143,8 +93,8 @@
         org-hide-emphasis-markers '(t)
         org-use-tag-inheritance '(nil)
         ;;org-bullets-bullet-list '("⁖")
-        org-todo-keywords '((sequence "TODO(t)" "INPROGRESS(i)" "WAITING(w)" "HOLD(h)" "|" "DONE(d)" "MISS(m)")
-                            (sequence "[ ](T)" "[-](I)" "[?](W)" "[~](H)" "|" "[X](D)" "[0](M)"))
+        org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "INPROGRESS(i)" "WAITING(w)" "HOLD(h)"  "|" "DONE(d)" "PASS(p)" "SOMEDAY-MAYBE(s)")
+                            (sequence "[ ](T)" "[N](N)" "[-](I)" "[~](W)" "[H](H)"  "|" "[X](D)" "[P](P)" "[S]S"))
         org-todo-keyword-faces
         '(("TODO"       :foreground "#7c7c78" :weight normal :underline t)
           ("WAITING"    :foreground "#9f7efe" :weight normal :underline t)
@@ -169,12 +119,12 @@
         org-agenda-include-deadlines t
         org-agenda-block-separator nil
         org-agenda-compact-blocks t
-        ;; org-agenda-skip-scheduled-if-done t
+        ;;org-agenda-skip-scheduled-if-done t
         org-agenda-todo-ignore-scheduled 'future
         org-agenda-tags-todo-honor-ignore-options t
         org-agenda-start-day "1d"
         org-agenda-span '7
-        org-agenda-start-on-weekday nil
+        org-agenda-start-on-weekday 1
         org-super-agenda-groups '((:name "Today"  ; Optionally specify section name
                                          :time-grid t  ; Items that appear on the time grid
                                          :scheduled today ; Items that have this TODO keyword
@@ -183,7 +133,7 @@
                                          ;; Single arguments given alone
                                          :tag "bills"
                                          :priority "A")
-                                  (:name "Done"
+                                  (:name "TODO AND scheduled in the past"
                                          :todo t
                                          :scheduled past
                                   )
@@ -226,61 +176,6 @@
                                   ;; match any of these groups, with the default order position of 99
                                   ))
                                   (org-agenda nil "a"))
-        (setq org-agenda-custom-commands
-        '(("z" "agenda controller"
-         ((today "" ((org-agenda-span 'day)
-                      (org-super-agenda-groups
-                       '((:name "Today"
-                                :time-grid t
-                                :date today
-                                :todo "TODAY"
-                                :scheduled today
-                                :order 1)))))
-          (backlog "" ((org-agenda-overriding-header "")
-                       (org-super-agenda-groups
-                        '((:name "Next to do"
-                                 :todo "NEXT"
-                                 :order 1)
-                          (:name "Important"
-                                 :tag "Important"
-                                 :priority "A"
-                                 :order 6)
-                          (:name "Due Today"
-                                 :deadline today
-                                 :order 2)
-                          (:name "Due Soon"
-                                 :deadline future
-                                 :order 8)
-                          (:name "Overdue"
-                                 :deadline past
-                                 :order 7)
-                          (:name "Assignments"
-                                 :tag "Assignment"
-                                 :order 10)
-                          (:name "Issues"
-                                 :tag "Issue"
-                                 :order 12)
-                          (:name "Projects"
-                                 :tag "Project"
-                                 :order 14)
-                          (:name "Emacs"
-                                 :tag "Emacs"
-                                 :order 13)
-                          (:name "Research"
-                                 :tag "Research"
-                                 :order 15)
-                          (:name "To read"
-                                 :tag "Read"
-                                 :order 30)
-                          (:name "Waiting"
-                                 :todo "WAITING"
-                                 :order 20)
-                          (:name "trivial"
-                                 :priority<= "C"
-                                 :tag ("Trivial" "Unimportant")
-                                 :todo ("SOMEDAY" )
-                                 :order 90)
-                          (:discard (:tag ("Chore" "Routine" "Daily")))))))))))
         :config
         (org-super-agenda-mode))
 
