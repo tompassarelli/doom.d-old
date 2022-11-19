@@ -4,23 +4,41 @@
       user-mail-address "tom.passarelli@protonmail.com")
 
 ; -------- Font and Spacing --------
+
+;; Doom exposes five (optional) variables for controlling fonts in Doom:
+;;
+;; - `doom-font' -- the primary font to use
+;; - `doom-variable-pitch-font' -- a non-monospace font (where applicable)
+;; - `doom-big-font' -- used for `doom-big-font-mode'; use this for
+;;   presentations or streaming.
+;; - `doom-unicode-font' -- for unicode glyphs
+;; - `doom-serif-font' -- for the `fixed-pitch-serif' face
+;;
+;; See 'C-h v doom-font' for documentation and more examples of what they
+;; accept. For example:
+;;
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;
+;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
+;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
+;; refresh your font settings. If Emacs still can't find your font, it likely
+;; wasn't installed correctly. Font issues are rarely Doom issues!
+
+;; There are two ways to load a theme. Both assume the theme is installed and
+;; available. You can either set `doom-theme' or manually load a theme with the
+;; `load-theme' function. This is the default:
+
 (setq
   doom-font (font-spec :family "Hack" :size 18)
   doom-big-font (font-spec :family "Hack" :size 22)
   doom-variable-pitch-font (font-spec :family "Hack" :size 16))
-;; If you want to change the style of line numbers, change this to `relative' or
-;; `nil' to disable it:
-(setq display-line-numbers-type t)
-;; (use-package! hl-fill-column-mode
-;;   :disabled t)
-;; (setq-default fill-column 100)
 
-;; -------- THEME --------
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. These are the defaults.
-;; 'doom-solarized-light doom-vibrant doom-nord
 (setq doom-theme 'doom-solarized-light)
+
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type t)
 
 ;;; -- DEVELOPMENT CONFIG GLOBAL --
 (setq projectile-project-search-path '("~/code/"))
@@ -46,10 +64,12 @@
 
 
 ;; ------- Javascript -------
+
 (setq js-indent-level 2
       js2-basic-offset 2)
 
 ;;; ------- Angular --------------
+
 ;;; angular-language-server
 ;; (after! lsp-mode
 ;;   (setq lsp-clients-angular-language-server-command
@@ -62,14 +82,16 @@
 ;;     "--stdio")))
 
 ;; -------- Python  -------------
+
 ;(after! lsp-python-ms
 ;  :ensure t
 ;  :hook (python-mode . (lambda ()
 ;                          (require 'lsp-python-ms)
 ;                          (lsp))))  ; or lsp-deferred
 
+
 ;;-------- ORG MODE -------------
-;;
+
 (add-to-list 'doom-large-file-excluded-modes 'org-mode)
 ;; (add-to-list 'exec-path "~/sqlite/sqlite3")
 (use-package org
@@ -111,6 +133,7 @@
                                (?B :foreground "#da8548")
                                (?C :foreground "#0098dd")))
 
+;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
  (use-package! org-super-agenda
   :after org-agenda
   :init
@@ -179,8 +202,22 @@
         :config
         (org-super-agenda-mode))
 
+
 ;; -- REFERENCE --
-;; Here are some additional functions/macros that could help you configure Doom:
+;; Whenever you reconfigure a package, make sure to wrap your config in an
+;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
+;;
+;;   (after! PACKAGE
+;;     (setq x y))
+;;
+;; The exceptions to this rule:
+;;
+;;   - Setting file/directory variables (like `org-directory')
+;;   - Setting variables which explicitly tell you to set them before their
+;;     package is loaded (see 'C-h v VARIABLE' to look up their documentation).
+;;   - Setting doom variables (which start with 'doom-' or '+').
+;;
+;; Here are some additional functions/macros that will help you configure Doom.
 ;;
 ;; - `load!' for loading external *.el files relative to this one
 ;; - `use-package!' for configuring packages
@@ -193,39 +230,8 @@
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
+;; Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
+;; etc).
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-
-  ;; This is for agile-style prioritization and project management
-  ;; It's very much in the style of Jira with the substitution of
-  ;; "intiatives" with "epochs" and "epics" with
-  ;; TODO refactor this hierarchy in the following way
-  ;;   - TODO Regular expressions, this list will get too long
-  ;;   - TODO all agile tags apply to a namespace a_ so sprint1 is a_s1
-  ;; project specific tags apply as a_pname_s1
-
-  ;;(defun fw/agenda-icon-material (name)
-  ;;"Returns an all-the-icons-material icon"
-  ;;(list (all-the-icons-material name)))
-
-  ;; https://old.reddit.com/r/emacs/comments/hnf3cw/my_orgmode_agenda_much_better_now_with_category/
-  ;(setq org-agenda-category-icon-alist
-  ;    `(("Birthday" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
-  ;      ("Today" ,(fw/agenda-icon-material "cake") nil nil :ascent center)
-  ;      ("Anniversary" ,(fw/agenda-icon-material "favorite") nil nil :ascent center)))
-
-        ;; org-tag-alist '((:startgrouptag)
-        ;;                 ("e1")
-        ;;                 (:grouptags)
-        ;;                 ("p1b3")
-        ;;                 (:endgrouptag)
-        ;;                 (:startgrouptag)
-        ;;                 ("p1b3")
-        ;;                 (:grouptags)
-        ;;                 ("s0")
-        ;;                 ("s1")
-        ;;                 ("s2")
-        ;;                 ("s3")
-        ;;                 (:endgrouptag))
-        ;; org-tags-exclude-from-inheritance later...exp deny some tags
